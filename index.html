@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>HTML5 Trial</title>
+	<link rel="stylesheet" href="style.css">
+	<h1>Bouncy Bouncy!</h1>
+	<canvas id="my7Canvas" class="canvases" width="600" height="300"></canvas>
+
+	<script>
+		var canvas;
+		var ctx;
+		var x = 600;
+		var y = 300;
+		var mx = 3.5;
+		var my = 4.5;
+		var WIDTH = 600;
+		var HEIGHT = 300;
+
+		function init(){
+			canvas = document.getElementById("my7Canvas");
+			ctx = canvas.getContext("2d");
+			return setInterval(draw,10);
+		}
+
+		function circle(x,y,r){
+			ctx.beginPath();
+			ctx.arc(x,y,r,0,2*Math.PI);
+			ctx.fillStyle = "lime";
+			ctx.fill();
+		}
+
+		function draw(){
+			clear();
+			circle(x,y,20);
+			if (x + mx > WIDTH || x + mx < 0)
+				mx = -mx;
+			if (y + my > HEIGHT || y + my < 0)
+				my = -my;
+			x += mx;
+			y += my;
+		}
+
+		function clear(){
+			ctx.clearRect(0,0,WIDTH,HEIGHT);
+		}
+		
+	</script>
+	<hr>
+</head>
+<body onLoad = "init()">
+	<h1>Hello World!!!</h1>
+	<canvas id="myCanvas" class="canvases" width="300" height="300"></canvas>
+	<canvas id="my2Canvas" class="canvases" width="300" height="300"></canvas>
+	<canvas id="my3Canvas" class="canvases" width="300" height="300"></canvas>
+	<hr>
+	<h1>Drawing Shapes!!</h1>
+	<canvas id="my4Canvas" class="canvases" width="300" height="300"></canvas>
+	<canvas id="my5Canvas" class="canvases" width="300" height="300"></canvas>
+	<canvas id="my6Canvas" class="canvases" width="300" height="300"></canvas>
+	<hr>
+
+<!-- 	<canvas id="my8Canvas" class="canvases" width="300px" height="300px"></canvas>
+	<canvas id="my9Canvas" class="canvases" width="300px" height="300px"></canvas> -->
+
+
+	<script>
+		var c = document.getElementById("myCanvas");
+		var ctx = c.getContext("2d");
+		ctx.fillStyle = "tomato";
+		ctx.fillRect(100,100,100,100);
+		ctx.strokeRect(80,80,140,140);
+		ctx.clearRect(120,120,60,60);
+
+		var b = document.getElementById("my2Canvas");
+		var btx = b.getContext("2d");
+		btx.fillStyle = "cyan";
+		btx.fillRect(0,0,300,300);
+		btx.clearRect(150,0,150,150);
+		btx.clearRect(0,150,150,150);
+
+		var a = document.getElementById("my3Canvas");
+		var atx = a.getContext("2d");
+		atx.fillStyle = "crimson";
+		atx.fillRect(0,0,300,300);
+		atx.clearRect(15,15,130,130);
+		atx.clearRect(15,157,130,130);
+		atx.clearRect(157,15,130,130);
+		atx.clearRect(157,157,130,130);
+	</script>
+
+	<script>
+		var c = document.getElementById("my4Canvas");
+		var ctx = c.getContext("2d");
+		ctx.beginPath();
+		ctx.lineWidth = "5";
+		ctx.strokeStyle = "grey";
+		ctx.fillStyle = "gainsboro";
+		ctx.moveTo(150,75);
+		ctx.lineTo(75,225);
+		ctx.lineTo(225,225);
+		ctx.closePath();
+		ctx.stroke();
+		ctx.fill();
+
+		var b = document.getElementById("my5Canvas");
+		var btx = b.getContext("2d");
+		btx.fillStyle = "gainsboro";
+		btx.strokeStyle = "grey";
+		btx.arc(150,150,50,0,2*Math.PI);
+		btx.stroke();
+		btx.fill();
+
+		var a = document.getElementById("my6Canvas");
+		var atx = a.getContext("2d");
+		var mario = new Image();
+		mario.src = "mario.png";
+		mario.onload = function(){
+			atx.drawImage(mario,0,200,100,100);
+		};
+	</script>
+
+
+</body>
+</html>

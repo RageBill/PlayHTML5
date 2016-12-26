@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Good Fruit Bad Fruit</title>
+	<link rel="stylesheet" href="style.css">
+	<h1>Fruit! Fruit!</h1>
+	<canvas id="myCanvas" class="canvases" width="600" height="600"></canvas>
+	<h1 id="score"></h1>
+
+	<script>
+		var canvas;
+		var ctx;
+		var x = 300;
+		var y = 300;
+		var r = 20;
+		var mx = 0;
+		var my = 4;
+		var goodX;
+		var goodY;
+		var badX;
+		var badY;
+		var fruitWidth = 50;
+		var fruitHeight = 50;
+		var goodCollision = false;
+		var badCollision = false;
+		var WIDTH = 600;
+		var HEIGHT = 600;
+		var score = 0;
+
+		function init(){
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+			goodX = Math.floor(Math.random()*550);
+			badX = Math.floor(Math.random()*550);
+			goodY = Math.floor(Math.random()*550);
+			badY = Math.floor(Math.random()*550);
+			window.onkeydown = keydownControl;
+			return setInterval(draw,20);
+		}
+
+		function circle(x,y,r){
+			ctx.beginPath();
+			ctx.arc(x,y,r,0,2*Math.PI);
+			ctx.fillStyle = "grey";
+			ctx.fill();
+		}
+
+		function draw(){
+			clear();
+			circle(x,y,r);
+			drawBadFruit();
+			drawGoodFruit();
+			if (x + mx > WIDTH - r || x + mx < 0 + r)
+				mx = -mx;
+			if (y + my > HEIGHT - r || y + my < 0 + r)
+				my = -my;
+			x += mx;
+			y += my;
+			collisionCheck();
+			collisionHandle();
+		}
+
+		function clear(){
+			ctx.clearRect(0,0,WIDTH,HEIGHT);
+		}
+		
+		function collisionCheck(){
+			if ((x >= badX) && (x <= badX + fruitWidth) && (y >= badY) && (y <= badY + fruitHeight))
+				badCollision = true;
+			else
+				badCollision = false;
+			if ((x >= goodX) && (x <= goodX + fruitWidth) && (y >= goodY) && (y <= goodY + fruitHeight))
+				goodCollision = true;
+			else
+				goodCollision = false;
+		}
+
+		function collisionHandle(){
+			if (badCollision){
+				badX = Math.floor(Math.random() * 550);
+				badY = Math.floor(Math.random() * 550);
+				score -= 1;
+				document.getElementById("score").innerHTML = "Score: " + score;
+			}
+
+			if (goodCollision){
+				goodX = Math.floor(Math.random() * 550);
+				goodY = Math.floor(Math.random() * 550);
+				score += 1;
+				document.getElementById("score").innerHTML = "Score: " + score;
+			}
+		}
+
+		function keydownControl(e){
+			if (e.keyCode == 37){
+				mx = -4;
+				my = 0;
+			}
+			if (e.keyCode == 38){
+				mx = 0;
+				my = -4;
+			}
+			if (e.keyCode == 39){
+				mx = 4;
+				my = 0;
+			}
+			if (e.keyCode == 40){
+				mx = 0;
+				my = 4;
+			}
+		}
+
+		function drawBadFruit(){
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+			var bad = new Image();
+			bad.src = "bad.png";
+			ctx.drawImage(bad,badX,badY,fruitWidth,fruitHeight);
+		}
+
+		function drawGoodFruit(){
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+			var good = new Image();
+			good.src = "good.png";
+			ctx.drawImage(good,goodX,goodY,fruitWidth,fruitHeight);
+		}
+
+
+	</script>
+</head>
+<body onLoad = "init()">
+	
+</body>
+</html>
