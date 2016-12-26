@@ -2,6 +2,14 @@ h1 {
 	color: salmon;
 }
 
+h3 {
+	color: tomato;
+}
+
+h5 {
+	color: crimson;
+}
+
 .canvases {
 	border: 1px solid black;
 }

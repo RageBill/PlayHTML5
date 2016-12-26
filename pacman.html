@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Pacman</title>
+	<link rel="stylesheet" href="style.css">
+	<h1>Pacman</h1>
+	<h3>Avoid the Ghosts!</h3>
+	<h5>Control with Up, Down, Left & Right Arrow Keys!</h5>
+	<canvas id="myCanvas" class="canvases" width="600" height="600"></canvas>
+
+	<script>
+		var canvas;
+		var ctx;
+		var x = 300;
+		var y = 300;
+		var r = 40;
+		var mx = 0;
+		var my = 4;
+		var pinkX;
+		var pinkY;
+		var orangeX;
+		var orangeY;
+		var ghostWidth = 50;
+		var ghostHeight = 50;
+		var WIDTH = 600;
+		var HEIGHT = 600;
+		var gameover = false;
+
+		function init(){
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+			pinkX = Math.floor(Math.random()*550);
+			orangeX = Math.floor(Math.random()*550);
+			pinkY = Math.floor(Math.random()*550);
+			orangeY = Math.floor(Math.random()*550);
+			window.onkeydown = keydownControl;
+			return setInterval(draw,20);
+		}
+
+		function pacman(x,y,r){
+			var pacman = new Image();
+			pacman.src = "pacman.png";
+			ctx.drawImage(pacman,x,y,r,r);
+		}
+
+		function draw(){
+			clear();
+			if (!gameover){
+				pacman(x,y,r);
+				drawPinkGhost();
+				drawOrangeGhost();
+				if (x + mx > WIDTH - r || x + mx < 0 + r)
+					mx = -mx;
+				if (y + my > HEIGHT - r || y + my < 0 + r)
+					my = -my;
+				x += mx;
+				y += my;
+				followPacman();
+				collision();
+			}
+		}
+
+		function clear(){
+			ctx.clearRect(0,0,WIDTH,HEIGHT);
+		}
+		
+		function collision(){
+			if ((x >= pinkX) && (x <= pinkX + ghostWidth) && (y >= pinkY) && (y <= pinkY + ghostHeight))
+				gameover = true;
+
+			if ((x >= orangeX) && (x <= orangeX + ghostWidth) && (y >= orangeY) && (y <= orangeY + ghostHeight))
+				gameover = true;
+		}
+
+		function keydownControl(e){
+			if (e.keyCode == 37){
+				mx = -4;
+				my = 0;
+			}
+			if (e.keyCode == 38){
+				mx = 0;
+				my = -4;
+			}
+			if (e.keyCode == 39){
+				mx = 4;
+				my = 0;
+			}
+			if (e.keyCode == 40){
+				mx = 0;
+				my = 4;
+			}
+		}
+
+		function drawPinkGhost(){
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+			var pink = new Image();
+			pink.src = "pink.png";
+			ctx.drawImage(pink,pinkX,pinkY,ghostWidth,ghostHeight);
+		}
+
+		function drawOrangeGhost(){
+			canvas = document.getElementById("myCanvas");
+			ctx = canvas.getContext("2d");
+			var orange = new Image();
+			orange.src = "orange.png";
+			ctx.drawImage(orange,orangeX,orangeY,ghostWidth,ghostHeight);
+		}
+
+		function followPacman(){
+			if (pinkX < x){
+				pinkX += 1;
+			}
+
+			if (pinkX > x){
+				pinkX -= 1;
+			}
+
+			if (pinkY < y){
+				pinkY += 1;
+			}
+
+			if (pinkY > y){
+				pinkY -= 1;
+			}
+
+			if (orangeX < x){
+				orangeX += 1;
+			}
+
+			if (orangeX > x){
+				orangeX -= 1;
+			}
+
+			if (orangeY < y){
+				orangeY += 1;
+			}
+
+			if (orangeY > y){
+				orangeY -= 1;
+			}
+		}
+
+
+	</script>
+</head>
+<body onLoad = "init()">
+	
+</body>
+</html>
